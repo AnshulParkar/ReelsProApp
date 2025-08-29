@@ -1,10 +1,4 @@
 const config = {
-  plugins: {
-    '@tailwindcss/postcss': {},
-    'daisyui/postcss': {
-      themes: [ 'dark' ],
-      darkTheme: 'dark',
-    },
-  },
+  plugins: ["@tailwindcss/postcss"],
 };
 export default config;
