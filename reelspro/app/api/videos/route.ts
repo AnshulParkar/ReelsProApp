@@ -9,10 +9,7 @@ export async function GET() {
     try {
         await connectToDatabase();
         const videos = await Video.find().sort({ createdAt: -1 }).exec();
-        if(!videos || videos.length === 0) {
-            return NextResponse.json({ message: 'No videos found' }, { status: 404 });
-        } 
-        return NextResponse.json(videos);
+        return NextResponse.json(videos || []);
     } catch (error) {
         console.error('Error connecting to database:', error);
         return NextResponse.json({ error: 'Failed to connect to database' }, { status: 500 });

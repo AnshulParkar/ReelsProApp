@@ -6,8 +6,8 @@ import Header from "./components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "ImageKit Next.js Integration",
-  description: "Demo of ImageKit integration with Next.js",
+  title: "ReelsPro - Share Your Moments",
+  description: "A modern social media platform for sharing video content",
 };
 
 export default function RootLayout({
@@ -16,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark">
       <body className={inter.className}>
         <Providers>
-          <Header />
-          <main className="container mx-auto px-4 py-8">{children}</main>
+          <div className="min-h-screen bg-base-100">
+            <Header />
+            <main className="relative">{children}</main>
+          </div>
         </Providers>
       </body>
     </html>
