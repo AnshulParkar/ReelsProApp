@@ -1,7 +1,9 @@
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { apiClient } from "../lib/apiclient";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import VideoFeed from "./components/VideoFeed";
 import { IVideo } from "@/models/Video";
+import { apiClient } from "@/lib/apiclient";
 
 export default function Home() {
   const [videos, setVideos] = useState<IVideo[]>([]);
@@ -9,27 +11,20 @@ export default function Home() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const videos = await apiClient.getVideos();
-        setVideos(videos);
+        const data = await apiClient.getVideos();
+        setVideos(data);
       } catch (error) {
         console.error("Error fetching videos:", error);
       }
     };
+
     fetchVideos();
   }, []);
 
   return (
-    <main>
-      <h1>Welcome to ReelsPro</h1>
-      <p>Your one-stop solution for video management.</p>
-      <div>
-        {videos.map(video => (
-          <div key={video._id?.toString()}>
-            <h2>{video.title}</h2>
-            <Image src={video.thumbnailUrl} alt={video.title} width={200} height={100} />
-          </div>
-        ))}
-      </div>
+    <main className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">ImageKit ReelsPro</h1>
+      <VideoFeed videos={videos} />
     </main>
   );
 }
