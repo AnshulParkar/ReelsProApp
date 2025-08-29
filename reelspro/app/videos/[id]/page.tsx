@@ -46,21 +46,8 @@ export default function VideoPage() {
           setVideo(foundVideo);
         }
 
-        setLikesCount(Math.floor(Math.random() * 1000)); // Mock data
-        setComments([
-          {
-            id: 1,
-            user: "user1",
-            text: "Amazing video! 🔥",
-            timestamp: "2 hours ago"
-          },
-          {
-            id: 2,
-            user: "user2", 
-            text: "Love this content! Keep it up 👏",
-            timestamp: "1 hour ago"
-          }
-        ]);
+  setLikesCount(video?.likesCount ?? 0);
+  setComments(video?.comments ?? []);
       } catch (err) {
         setError("Failed to load video");
         console.error("Error fetching video:", err);
@@ -76,6 +63,7 @@ export default function VideoPage() {
 
   const handleLike = () => {
     setIsLiked(!isLiked);
+    // Optionally, trigger like API here
     setLikesCount(prev => isLiked ? prev - 1 : prev + 1);
     showNotification(isLiked ? "Removed from likes" : "Added to likes", "success");
   };
@@ -170,7 +158,7 @@ export default function VideoPage() {
             </button>
             <div>
               <h1 className="font-semibold">{video.title}</h1>
-              <p className="text-sm text-base-content/70">@creator</p>
+              <p className="text-sm text-base-content/70">{video.creator ? `@${video.creator}` : "@user"}</p>
             </div>
           </div>
         </div>
@@ -253,7 +241,7 @@ export default function VideoPage() {
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-semibold">@creator</h3>
+                  <h3 className="font-semibold">{video.creator ? `@${video.creator}` : "@user"}</h3>
                   <p className="text-sm text-base-content/70">Content Creator</p>
                 </div>
                 <button className="btn btn-primary btn-sm">Follow</button>

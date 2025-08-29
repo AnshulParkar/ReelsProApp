@@ -27,6 +27,16 @@ export interface IVideo {
             height: number;
         };
     };
+    creator?: string; // username or user id
+    likesCount?: number;
+    commentsCount?: number;
+    duration?: string;
+    comments?: Array<{
+        id: number | string;
+        user: string;
+        text: string;
+        timestamp: string;
+    }>;
 }
 
 const videoSchema = new Schema<IVideo>(
@@ -46,7 +56,19 @@ const videoSchema = new Schema<IVideo>(
                 width: { type: Number, default: 320 },
                 height: { type: Number, default: 180 }
             }
-        }
+        },
+        creator: { type: String },
+        likesCount: { type: Number, default: 0 },
+        commentsCount: { type: Number, default: 0 },
+        duration: { type: String },
+        comments: [
+            {
+                id: { type: Schema.Types.Mixed },
+                user: { type: String },
+                text: { type: String },
+                timestamp: { type: String }
+            }
+        ]
     },
     {
         timestamps: true

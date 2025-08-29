@@ -5,13 +5,15 @@ import { Heart, MessageCircle, Share2, Play, MoreHorizontal } from "lucide-react
 import { useState } from "react";
 
 export default function VideoComponent({ video }: { video: IVideo }) {
+  // TODO: Integrate real like/comment data from backend when available
   const [isLiked, setIsLiked] = useState(false);
-  const [likesCount, setLikesCount] = useState(Math.floor(Math.random() * 1000)); // Mock data
-  const [commentsCount] = useState(Math.floor(Math.random() * 100)); // Mock data
+  // Use real data if available, else fallback to 0
+  const likesCount = video.likesCount ?? 0;
+  const commentsCount = video.commentsCount ?? 0;
 
   const handleLike = () => {
     setIsLiked(!isLiked);
-    setLikesCount(prev => isLiked ? prev - 1 : prev + 1);
+    // Optionally, trigger like API here
   };
 
   const formatCount = (count: number) => {
@@ -49,10 +51,12 @@ export default function VideoComponent({ video }: { video: IVideo }) {
               </div>
             </div>
 
-            {/* Video duration (mock) */}
-            <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
-              {Math.floor(Math.random() * 60)}:{(Math.floor(Math.random() * 60)).toString().padStart(2, '0')}
-            </div>
+            {/* Video duration (if available) */}
+            {video.duration && (
+              <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
+                {video.duration}
+              </div>
+            )}
           </div>
         </Link>
       </figure>
@@ -70,9 +74,9 @@ export default function VideoComponent({ video }: { video: IVideo }) {
               </div>
             </div>
             <div>
-              <p className="font-medium text-sm">@creator</p>
+              <p className="font-medium text-sm">{video.creator ? `@${video.creator}` : "@user"}</p>
               <p className="text-xs text-base-content/60">
-                {new Date(video.createdAt || Date.now()).toLocaleDateString()}
+                {video.createdAt ? new Date(video.createdAt).toLocaleDateString() : ""}
               </p>
             </div>
           </div>
